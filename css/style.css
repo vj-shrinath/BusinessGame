@@ -1,0 +1,2452 @@
+/* =========================================================
+   BUSINESS - NAVA VYAPAR (INDIA EDITION)
+   Responsive Multi-Device Rectangle Board Game Stylesheet
+   Engineered for Living Room TVs, Desktop PCs, Laptops, Tablets & Mobiles
+   ========================================================= */
+
+:root {
+    --bg-dark: #070b19;
+    --board-rim: #1c1511;
+    --board-brass: #d4af37;
+    --board-blue: #112d78;
+    --board-center-blue: #163894;
+    --tile-bg: #ffffff;
+    --tile-border: #b8c8e2;
+    --gold: #fbc02d;
+    --text-primary: #ffffff;
+    --text-dark: #0f172a;
+    --focus-glow: #00e5ff;
+    --focus-gold: #ffea00;
+    
+    /* Rupee Note Palette from reference photo */
+    --note-50: #b388ff;
+    --note-100: #ffe57f;
+    --note-500: #ff80ab;
+    --note-1000: #b9f6ca;
+
+    /* Jewel Goti Color Themes */
+    --goti-p0-light: #ff6b6b;
+    --goti-p0-main: #d32f2f;
+    --goti-p0-dark: #660000;
+
+    --goti-p1-light: #60a5fa;
+    --goti-p1-main: #1d4ed8;
+    --goti-p1-dark: #0b1d56;
+
+    --goti-p2-light: #4ade80;
+    --goti-p2-main: #15803d;
+    --goti-p2-dark: #052e16;
+
+    --goti-p3-light: #fef08a;
+    --goti-p3-main: #eab308;
+    --goti-p3-dark: #713f12;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    max-height: 100dvh;
+    background: radial-gradient(ellipse at 50% 35%, #0e1e47 0%, #08112b 55%, #02050e 100%);
+    font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--text-primary);
+    overflow: hidden;
+    position: relative;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* =========================================================
+   RESPONSIVE MULTI-DEVICE MASTER ROOT
+   Edge-to-edge layout that natively utilizes any screen
+   ========================================================= */
+
+#tv-app-root {
+    width: 100vw;
+    height: 100vh;
+    max-height: 100dvh;
+    position: relative;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: minmax(0, 1fr) 34px;
+    gap: 5px;
+    padding: 6px 8px 4px 8px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* =========================================================
+   THE RECTANGLE BOARD GAME (10x10 GRID WIDE ASPECT RATIO)
+   Master luxury mahogany & gold foil beveled board frame
+   ========================================================= */
+
+.board-container {
+    background: radial-gradient(ellipse at 50% 50%, #163a94 0%, #0d2568 65%, #06143c 100%);
+    border: 7px solid #1a100b;
+    outline: 2px solid var(--board-brass);
+    outline-offset: -2px;
+    border-radius: 12px;
+    box-shadow: 
+        0 24px 60px rgba(0, 0, 0, 0.95), 
+        0 0 0 1px rgba(255, 215, 0, 0.35),
+        inset 0 0 40px rgba(0, 0, 0, 0.85);
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    grid-template-rows: repeat(10, minmax(0, 1fr));
+    gap: 3.5px;
+    padding: 4px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* Authentic Board Center Fold Seam */
+.board-fold-seam {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(255,255,255,0.12) 50%, rgba(0,0,0,0.6) 100%);
+    box-shadow: 1px 0 3px rgba(0,0,0,0.5);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* =========================================================
+   INDIVIDUAL BOARD TILES (BOXES) - ENLARGED & HIGH FIDELITY
+   Fine pressed cardstock surface, jewel enamel headers, crisp text
+   ========================================================= */
+
+.board-tile {
+    background: linear-gradient(180deg, #ffffff 0%, #f9fbfd 50%, #eff4fa 100%);
+    border: 1.5px solid #25344d;
+    border-radius: 3px;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    color: #0f172a;
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1.5px 2px rgba(0, 0, 0, 0.08), 0 1.5px 4px rgba(0, 0, 0, 0.22);
+    transition: transform 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.board-tile:hover {
+    transform: translateY(-3px) scale(1.04);
+    z-index: 28;
+    border-color: var(--focus-glow) !important;
+    box-shadow: 0 10px 24px rgba(0, 229, 255, 0.5), inset 0 0 0 1px var(--focus-glow);
+}
+
+.board-tile.tv-focused {
+    transform: translateY(-4px) scale(1.05);
+    z-index: 32;
+    border-color: var(--focus-glow) !important;
+    box-shadow: 0 0 25px var(--focus-glow), 0 0 10px rgba(0, 229, 255, 0.85), inset 0 0 6px rgba(0, 229, 255, 0.4) !important;
+}
+
+/* Orientation: Top and Bottom Rows (Vertical Layout: Color Bar Top, City, Price, Landmark) */
+.edge-top, .edge-bottom {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.tile-bar-top {
+    width: 100%;
+    height: 19px;
+    flex-shrink: 0;
+    border-bottom: 1.5px solid #1a2538;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 1px 0 rgba(212, 175, 55, 0.6);
+}
+
+/* Orientation: Left Column (Horizontal Layout: Color Bar Left, Side Content) */
+.edge-left {
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.tile-bar-left {
+    width: 16px;
+    height: 100%;
+    flex-shrink: 0;
+    border-right: 1.5px solid #1a2538;
+    box-shadow: inset 1px 0 1px rgba(255, 255, 255, 0.6), 1px 0 0 rgba(212, 175, 55, 0.6);
+}
+
+/* Orientation: Right Column (Horizontal Layout: Side Content, Color Bar Right) */
+.edge-right {
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.tile-bar-right {
+    width: 16px;
+    height: 100%;
+    flex-shrink: 0;
+    border-left: 1.5px solid #1a2538;
+    box-shadow: inset -1px 0 1px rgba(255, 255, 255, 0.6), -1px 0 0 rgba(212, 175, 55, 0.6);
+}
+
+.tile-side-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px;
+    min-width: 0;
+    height: 100%;
+}
+
+.tile-header-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 2px 2px 0 2px;
+    flex-shrink: 0;
+}
+
+.tile-city-name {
+    font-size: clamp(9px, 0.8vw, 11.5px);
+    font-weight: 850;
+    color: #0b1530;
+    line-height: 1.15;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 96%;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.tile-price-text {
+    font-size: clamp(8.5px, 0.72vw, 10.5px);
+    font-weight: 800;
+    color: #1e293b;
+    line-height: 1.1;
+    text-align: center;
+    margin-top: 1.5px;
+    background: rgba(15, 23, 42, 0.05);
+    border: 1px solid rgba(0,0,0,0.06);
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+
+.tile-artwork-area {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0 2px 2px 2px;
+    min-height: 0;
+}
+
+.tile-artwork-area svg {
+    width: 100%;
+    height: 100%;
+    max-height: clamp(48px, 4.4vw, 64px);
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 2.5px 3.5px rgba(0,0,0,0.18));
+}
+
+/* Special Card Styling: Chance, Community Chest, Tax */
+.tile-chance {
+    background: #ff6d00 !important;
+    color: #ffffff !important;
+    border: 1.5px solid #1e293b !important;
+}
+
+.tile-chance .tile-bar-top,
+.tile-chance .tile-bar-left,
+.tile-chance .tile-bar-right {
+    display: none !important;
+}
+
+.tile-chance .tile-city-name {
+    color: #ffffff !important;
+    font-size: clamp(11px, 0.95vw, 13px) !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.5px !important;
+    margin-top: 2px;
+}
+
+.tile-chance .tile-price-text {
+    display: none !important;
+}
+
+.tile-chance .tile-artwork-area svg {
+    max-height: 50px;
+}
+
+.tile-chest, .tile-fortune {
+    background: #ffffff !important;
+}
+
+.tile-chest .tile-city-name,
+.tile-fortune .tile-city-name {
+    font-size: clamp(7.5px, 0.65vw, 9.5px) !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    white-space: normal !important;
+    line-height: 1.05 !important;
+    text-align: center;
+}
+
+.tile-chest .tile-bar-top,
+.tile-fortune .tile-bar-top,
+.tile-chest .tile-bar-left,
+.tile-fortune .tile-bar-left,
+.tile-chest .tile-bar-right,
+.tile-fortune .tile-bar-right {
+    display: none !important;
+}
+
+.tile-tax .tile-bar-top,
+.tile-tax .tile-bar-left,
+.tile-tax .tile-bar-right {
+    display: none !important;
+}
+
+.tile-tax .tile-price-text {
+    color: #b91c1c !important;
+    font-weight: 800 !important;
+}
+
+/* Owner Ribbon on Tile */
+.tile-owner-ribbon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1px 6px;
+    border-bottom-left-radius: 6px;
+    display: none;
+    z-index: 15;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.tile-owner-ribbon .ribbon-text {
+    font-size: 9px;
+    font-weight: 900;
+    color: #ffffff;
+}
+
+.tile-owned {
+    border-top: 3px solid;
+}
+
+/* =========================================================
+   REALISTIC TOP-VIEW PLAYING TOKENS (GOTI)
+   Accurately rendered like classic turned Indian wooden/resin pawns
+   ========================================================= */
+
+.tile-pawns {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    pointer-events: none;
+    z-index: 20;
+    min-height: 24px;
+}
+
+.board-goti {
+    width: clamp(23px, 1.9vw, 29px);
+    height: clamp(23px, 1.9vw, 29px);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    flex-shrink: 0;
+}
+
+/* 1. Ambient Contact Shadow on the Board */
+.goti-ambient-shadow {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.3) 55%, transparent 75%);
+    transform: translate(2.5px, 3px);
+    filter: blur(1.5px);
+    pointer-events: none;
+}
+
+/* 2. Beveled Base Flange (Outer Rim) */
+.goti-base-rim {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.75), 
+        inset -1.5px -1.5px 2px rgba(0, 0, 0, 0.7),
+        0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* 3. Concentric Sculpted Waist / Collar Groove */
+.goti-waist-ring {
+    width: 76%;
+    height: 76%;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        inset 0 2px 3.5px rgba(0, 0, 0, 0.75),
+        0 1px 1.5px rgba(255, 255, 255, 0.45);
+}
+
+/* 4. Glossy Spherical Dome Head (Top Ball View) */
+.goti-head-sphere {
+    width: 54%;
+    height: 54%;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 
+        inset 0.8px 0.8px 1.5px rgba(255, 255, 255, 0.85),
+        0 1.5px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* 5. Specular Glint Hotspot (Overhead Light Reflection) */
+.goti-specular-glint {
+    position: absolute;
+    top: 18%;
+    left: 20%;
+    width: 32%;
+    height: 22%;
+    background: #ffffff;
+    border-radius: 50%;
+    opacity: 0.92;
+    filter: blur(0.3px);
+    transform: rotate(-30deg);
+}
+
+/* Secondary Ambient Bounce Reflection */
+.goti-secondary-sheen {
+    position: absolute;
+    bottom: 15%;
+    right: 18%;
+    width: 30%;
+    height: 18%;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    filter: blur(0.5px);
+}
+
+/* Turned Center Pip (Lathe / Mold Center Mark) */
+.goti-apex-pip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2.5px;
+    height: 2.5px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 0.8px solid rgba(255, 255, 255, 0.4);
+    background: rgba(0,0,0,0.15);
+}
+
+/* Player Specific Goti Resin Colors */
+/* Player 1 - Ruby Red Goti */
+.goti-p0 .goti-base-rim {
+    background: radial-gradient(circle at 35% 30%, #ef5350 0%, var(--goti-p0-main) 60%, var(--goti-p0-dark) 100%);
+}
+.goti-p0 .goti-waist-ring {
+    background: radial-gradient(circle at 35% 30%, #ff5252 0%, #b71c1c 70%, #4a0000 100%);
+}
+.goti-p0 .goti-head-sphere {
+    background: radial-gradient(circle at 35% 25%, #ffffff 0%, var(--goti-p0-light) 25%, var(--goti-p0-main) 65%, var(--goti-p0-dark) 100%);
+}
+
+/* Player 2 - Sapphire Blue Goti */
+.goti-p1 .goti-base-rim {
+    background: radial-gradient(circle at 35% 30%, #42a5f5 0%, var(--goti-p1-main) 60%, var(--goti-p1-dark) 100%);
+}
+.goti-p1 .goti-waist-ring {
+    background: radial-gradient(circle at 35% 30%, #3b82f6 0%, #1e40af 70%, #0c1a40 100%);
+}
+.goti-p1 .goti-head-sphere {
+    background: radial-gradient(circle at 35% 25%, #ffffff 0%, var(--goti-p1-light) 25%, var(--goti-p1-main) 65%, var(--goti-p1-dark) 100%);
+}
+
+/* Player 3 - Emerald Green Goti */
+.goti-p2 .goti-base-rim {
+    background: radial-gradient(circle at 35% 30%, #66bb6a 0%, var(--goti-p2-main) 60%, var(--goti-p2-dark) 100%);
+}
+.goti-p2 .goti-waist-ring {
+    background: radial-gradient(circle at 35% 30%, #22c55e 0%, #166534 70%, #052e16 100%);
+}
+.goti-p2 .goti-head-sphere {
+    background: radial-gradient(circle at 35% 25%, #ffffff 0%, var(--goti-p2-light) 25%, var(--goti-p2-main) 65%, var(--goti-p2-dark) 100%);
+}
+
+/* Player 4 - Golden Topaz Amber Goti */
+.goti-p3 .goti-base-rim {
+    background: radial-gradient(circle at 35% 30%, #fde047 0%, var(--goti-p3-main) 60%, var(--goti-p3-dark) 100%);
+}
+.goti-p3 .goti-waist-ring {
+    background: radial-gradient(circle at 35% 30%, #eab308 0%, #a16207 70%, #451a03 100%);
+}
+.goti-p3 .goti-head-sphere {
+    background: radial-gradient(circle at 35% 25%, #ffffff 0%, var(--goti-p3-light) 25%, var(--goti-p3-main) 65%, var(--goti-p3-dark) 100%);
+}
+
+/* Active Turn Goti Aura & Levitation */
+.active-turn-goti {
+    animation: gotiLevitate 1.8s ease-in-out infinite alternate;
+    z-index: 30 !important;
+}
+
+@keyframes gotiLevitate {
+    0% { transform: translateY(0px) scale(1.05); }
+    100% { transform: translateY(-3px) scale(1.15); }
+}
+
+.goti-beacon-ring {
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    border-radius: 50%;
+    border: 2px solid var(--focus-glow);
+    animation: gotiPulse 1.8s ease-out infinite;
+    pointer-events: none;
+}
+
+@keyframes gotiPulse {
+    0% { transform: scale(0.8); opacity: 1; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Player Card Mini Goti Indicator */
+.player-mini-goti {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.mini-goti-inner {
+    width: 60%;
+    height: 60%;
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffffff 0%, rgba(255,255,255,0.6) 30%, transparent 70%);
+}
+
+/* =========================================================
+   REALISTIC 3D MINIATURE HOUSES & HOTELS
+   ========================================================= */
+
+.tile-buildings {
+    position: absolute;
+    top: 20px;
+    left: 2px;
+    right: 2px;
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.mini-3d-house {
+    width: 13px;
+    height: 12px;
+    position: relative;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.6));
+}
+
+.house-roof {
+    width: 0;
+    height: 0;
+    border-left: 6.5px solid transparent;
+    border-right: 6.5px solid transparent;
+    border-bottom: 5px solid #2e7d32;
+}
+
+.house-body {
+    width: 13px;
+    height: 7px;
+    background: #1b5e20;
+    border-radius: 0 0 2px 2px;
+    box-shadow: inset 1px 0 0 rgba(255,255,255,0.3);
+}
+
+.mini-3d-hotel {
+    width: 20px;
+    height: 14px;
+    position: relative;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.7));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hotel-roof {
+    width: 16px;
+    height: 3.5px;
+    background: #e53935;
+    border-radius: 2px 2px 0 0;
+}
+
+.hotel-chimney {
+    position: absolute;
+    top: -2px;
+    right: 3px;
+    width: 3px;
+    height: 3.5px;
+    background: #b71c1c;
+}
+
+.hotel-facade {
+    width: 20px;
+    height: 10.5px;
+    background: #c62828;
+    color: #ffffff;
+    font-size: 7.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 0 2px 2px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+}
+
+/* =========================================================
+   SPECIAL CORNER TILES - AUTHENTIC BOARD GAME ARTWORK
+   ========================================================= */
+
+.corner-tile-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    padding: 3px;
+    box-sizing: border-box;
+    position: relative;
+    background: #ffffff;
+}
+
+/* START / GO Corner (Tile 0) */
+.corner-go {
+    background: #ffffff;
+}
+
+.go-top-text {
+    font-size: clamp(8px, 0.72vw, 10.5px);
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.1;
+    letter-spacing: -0.2px;
+}
+
+.go-center-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin: 1px 0;
+}
+
+.go-text {
+    font-size: clamp(22px, 2.2vw, 32px);
+    font-weight: 950;
+    color: #0f172a;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+.go-arrow {
+    color: #dc2626;
+    font-size: clamp(18px, 1.8vw, 24px);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
+.start-goti-dock {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 22px;
+}
+
+.start-goti-dock .tile-pawns {
+    position: static;
+    min-height: auto;
+}
+
+/* RESORT Corner (Tile 9) */
+.corner-resort {
+    background: #f0fdf4;
+}
+
+.corner-resort .corner-title-text {
+    font-size: clamp(10.5px, 0.9vw, 13px);
+    font-weight: 900;
+    color: #0284c7;
+    letter-spacing: 0.5px;
+}
+
+.resort-artwork {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resort-icon {
+    font-size: clamp(22px, 2vw, 28px);
+    color: #0284c7;
+}
+
+.corner-resort .corner-sub-text {
+    font-size: clamp(8px, 0.7vw, 9.5px);
+    font-weight: 700;
+    color: #0369a1;
+}
+
+/* GO TO JAIL / POLICE OFFICER Corner (Tile 18) */
+.corner-police {
+    background: #ffffff;
+}
+
+.police-title {
+    font-size: clamp(9.5px, 0.82vw, 12px);
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: 0.2px;
+}
+
+.police-artwork {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.police-artwork svg {
+    max-height: 52px;
+    width: 100%;
+    display: block;
+}
+
+/* JUST VISITING / JAIL BARS Corner (Tile 27) */
+.corner-visiting-jail {
+    background: #fcfbf7;
+}
+
+.jail-bars-artwork {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding-top: 2px;
+}
+
+.jail-bars-artwork svg {
+    max-height: 46px;
+    width: 100%;
+    display: block;
+}
+
+.visiting-tag {
+    font-size: clamp(8.5px, 0.75vw, 11px);
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1.1;
+}
+
+.visiting-sub {
+    font-size: clamp(7.5px, 0.65vw, 9.5px);
+    font-weight: 700;
+    color: #475569;
+}
+
+/* =========================================================
+   BOARD CENTER CONTENT: IN-BOARD COMMAND & STATS CONSOLE
+   Accommodates all statistics, player HUD, controls, and dice inside the board
+   ========================================================= */
+
+.board-center-content {
+    background: #0f2766;
+    border: 2.5px solid rgba(255, 215, 0, 0.45);
+    border-radius: 6px;
+    position: relative;
+    box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.75), 0 0 15px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.center-art-backdrop {
+    position: absolute;
+    inset: 0;
+    background: url('../center_art.jpg') center center / cover no-repeat;
+    opacity: 0.88;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.center-dark-scrim {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(10, 20, 52, 0.55) 0%, rgba(6, 12, 34, 0.84) 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.board-fold-seam {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(255,255,255,0.08) 50%, rgba(0,0,0,0.5) 100%);
+    box-shadow: 1px 0 2px rgba(0,0,0,0.4);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Master Layout of the Center Console */
+.center-console-layout {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px 12px 6px 12px;
+    box-sizing: border-box;
+    gap: 6px;
+}
+
+/* 1. Top Strip: Brand, Turn Status, Player Controls */
+.center-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    flex-shrink: 0;
+    padding: 2px 4px 4px 4px;
+}
+
+.center-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.brand-coin-badge {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff7a1 0%, #fbc02d 50%, #b8860b 100%);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6), inset 0 1px 1px #ffffff, 0 0 12px rgba(251, 192, 45, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #451a03;
+    font-size: 13px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    flex-shrink: 0;
+}
+
+.brand-text-wrap {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.brand-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(12px, 0.95vw, 15px);
+    font-weight: 900;
+    letter-spacing: 1.8px;
+    background: linear-gradient(135deg, #ffffff 0%, #fef08a 45%, #ffd700 80%, #d4af37 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.85));
+    white-space: nowrap;
+}
+
+.brand-sub {
+    font-family: 'Outfit', sans-serif;
+    font-size: 7.5px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #94a3b8;
+    text-transform: uppercase;
+}
+
+.center-turn-banner {
+    flex: 1;
+    max-width: 580px;
+    background: linear-gradient(135deg, rgba(8, 16, 40, 0.88) 0%, rgba(15, 23, 55, 0.82) 100%);
+    border: 1px solid rgba(251, 192, 45, 0.45);
+    border-radius: 24px;
+    padding: 5px 16px;
+    font-size: clamp(11.5px, 0.88vw, 13.5px);
+    font-weight: 700;
+    color: #f8fafc;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.turn-beacon-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 10px #4ade80, 0 0 20px #22c55e;
+    animation: beaconPulse 1.6s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes beaconPulse {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+.center-turn-banner b {
+    color: var(--gold);
+    font-weight: 900;
+}
+
+.center-controls-strip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.segmented-pills-wrap {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 20px;
+    padding: 2px 4px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.count-label {
+    font-size: 10px;
+    color: #94a3b8;
+    padding: 0 4px;
+}
+
+.btn-pill {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    outline: none;
+}
+
+.btn-pill:hover, .btn-pill.tv-focused {
+    background: rgba(0, 229, 255, 0.15);
+    color: #ffffff;
+    border-color: var(--focus-glow);
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+}
+
+.btn-pill.active {
+    background: linear-gradient(180deg, #ffd700 0%, #f59e0b 100%);
+    color: #0b1536;
+    border-color: #ffd700;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.5);
+    font-weight: 900;
+}
+
+.btn-fullscreen-pill {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #cbd5e1;
+    border-radius: 8px;
+    padding: 4px 9px;
+}
+
+/* 2. Middle Section: Players Statistics HUD (Luxury Glass Cards) */
+.center-players-hud {
+    display: grid;
+    grid-template-columns: repeat(var(--player-count, 4), minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.player-card-hud {
+    background: linear-gradient(145deg, rgba(14, 22, 45, 0.88) 0%, rgba(9, 15, 34, 0.94) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 10px;
+    padding: 6px 10px 7px 10px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.player-card-hud::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background 0.25s ease;
+}
+
+.player-card-hud.active-turn {
+    border-color: rgba(255, 215, 0, 0.9);
+    box-shadow: 0 0 24px rgba(255, 215, 0, 0.45), 0 8px 24px rgba(0, 0, 0, 0.7), inset 0 0 16px rgba(255, 215, 0, 0.12);
+    background: linear-gradient(145deg, rgba(24, 38, 85, 0.96) 0%, rgba(14, 23, 56, 0.96) 100%);
+    transform: translateY(-2px);
+}
+
+.player-card-hud.active-turn::before {
+    background: linear-gradient(90deg, transparent 0%, #ffd700 50%, transparent 100%);
+}
+
+.player-card-hud.bankrupt {
+    opacity: 0.35;
+    filter: grayscale(0.9);
+}
+
+.player-hud-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+.player-hud-goti {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    flex-shrink: 0;
+}
+
+.player-hud-name-wrap {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.player-hud-name {
+    font-size: clamp(10.5px, 0.8vw, 12.5px);
+    font-weight: 800;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.2px;
+}
+
+.player-hud-badge {
+    font-size: 8px;
+    padding: 1px 4.5px;
+    border-radius: 3px;
+    font-weight: 900;
+    color: #ffffff;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.active-turn-pulse-tag {
+    font-size: 8px;
+    font-weight: 900;
+    color: #0b1536;
+    background: linear-gradient(135deg, #ffd700, #f59e0b);
+    padding: 1.5px 5px;
+    border-radius: 3px;
+    animation: turnPulse 1.2s infinite alternate;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.5);
+}
+
+@keyframes turnPulse {
+    0% { transform: scale(0.95); opacity: 0.88; }
+    100% { transform: scale(1.05); opacity: 1; }
+}
+
+.player-hud-cash {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(14px, 1.25vw, 19px);
+    font-weight: 900;
+    color: #4ade80;
+    line-height: 1.15;
+    margin: 1px 0 3px 0;
+    letter-spacing: -0.4px;
+    text-shadow: 0 0 14px rgba(74, 222, 128, 0.35);
+}
+
+.player-hud-cash .currency-symbol {
+    font-size: clamp(11.5px, 0.9vw, 14px);
+    margin-right: 1.5px;
+    opacity: 0.85;
+}
+
+.player-hud-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: clamp(8.5px, 0.68vw, 10px);
+    color: #94a3b8;
+    white-space: nowrap;
+    margin-top: 1px;
+}
+
+.hud-stat-item b {
+    color: #f1f5f9;
+    font-weight: 800;
+}
+
+/* Micro Property Color Chips */
+.player-property-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-top: 4px;
+    min-height: 8px;
+}
+
+.prop-chip {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+    display: inline-block;
+    transition: transform 0.15s ease;
+}
+
+.prop-chip:hover {
+    transform: scale(1.4);
+    z-index: 5;
+}
+
+/* 3. Action Hub: 3D Dice Stage & Pro Master Action Buttons */
+.center-action-hub {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    width: 100%;
+    margin: auto 0;
+    padding: 4px 0;
+}
+
+.center-dice-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+}
+
+.dice-roll-stage {
+    display: flex;
+    gap: 12px;
+}
+
+.die {
+    width: clamp(42px, 3.5vw, 54px);
+    height: clamp(42px, 3.5vw, 54px);
+    background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 60%, #e2e8f0 100%);
+    border-radius: 12px;
+    box-shadow: 
+        0 10px 22px rgba(0, 0, 0, 0.7), 
+        inset 0 2px 4px rgba(255, 255, 255, 0.95),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    padding: 6px;
+    box-sizing: border-box;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.pip {
+    width: clamp(6.5px, 0.58vw, 9px);
+    height: clamp(6.5px, 0.58vw, 9px);
+    background: #0f172a;
+    border-radius: 50%;
+    align-self: center;
+    justify-self: center;
+    box-shadow: inset 0 1.5px 2px rgba(0, 0, 0, 0.9), 0 0.5px 1px rgba(255, 255, 255, 0.4);
+}
+
+.pip-center { grid-column: 2; grid-row: 2; }
+.pip-top-left { grid-column: 1; grid-row: 1; }
+.pip-top-right { grid-column: 3; grid-row: 1; }
+.pip-mid-left { grid-column: 1; grid-row: 2; }
+.pip-mid-right { grid-column: 3; grid-row: 2; }
+.pip-bottom-left { grid-column: 1; grid-row: 3; }
+.pip-bottom-right { grid-column: 3; grid-row: 3; }
+
+.dice-total-tag {
+    background: rgba(6, 11, 28, 0.85);
+    border: 1px solid rgba(255, 215, 0, 0.6);
+    color: var(--gold);
+    font-size: clamp(10px, 0.8vw, 12px);
+    font-weight: 900;
+    padding: 2.5px 12px;
+    border-radius: 14px;
+    letter-spacing: 0.6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.dice-total-tag.pop {
+    transform: scale(1.18);
+    background: linear-gradient(135deg, #ffd700, #f59e0b);
+    color: #0b1536;
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.7);
+}
+
+.action-buttons-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Master Tactile 3D Action Buttons */
+.tv-btn {
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(13px, 0.95vw, 15.5px);
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.16s ease;
+    outline: none;
+    white-space: nowrap;
+    position: relative;
+    user-select: none;
+}
+
+.tv-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    filter: grayscale(0.5);
+}
+
+.tv-btn.tv-focused,
+.tv-focusable.tv-focused {
+    transform: scale(1.06) translateY(-2px);
+    border-color: var(--focus-glow) !important;
+    box-shadow: 0 0 24px var(--focus-glow), 0 8px 24px rgba(0, 229, 255, 0.6) !important;
+}
+
+/* Ruby Crimson Master Roll Button */
+.btn-roll-master {
+    background: linear-gradient(180deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+    color: #ffffff;
+    border: 1.5px solid #f87171;
+    border-bottom: 3.5px solid #7f1d1d;
+    box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45), 0 4px 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.btn-roll-master::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: rotate(30deg);
+    animation: btnShimmer 3.2s infinite;
+}
+
+@keyframes btnShimmer {
+    0% { left: -60%; }
+    30% { left: 140%; }
+    100% { left: 140%; }
+}
+
+.btn-roll-master:active:not(:disabled) {
+    transform: translateY(2px);
+    border-bottom-width: 1.5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Emerald Luxury Master Buy Button */
+.btn-buy-master {
+    background: linear-gradient(180deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+    color: #ffffff;
+    border: 1.5px solid #4ade80;
+    border-bottom: 3.5px solid #14532d;
+    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.45), 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.btn-buy-master:active:not(:disabled) {
+    transform: translateY(2px);
+    border-bottom-width: 1.5px;
+}
+
+/* Titanium Slate Master End Turn Button */
+.btn-end-master {
+    background: linear-gradient(180deg, #475569 0%, #334155 50%, #1e293b 100%);
+    color: #e2e8f0;
+    border: 1.5px solid #64748b;
+    border-bottom: 3.5px solid #0f172a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+}
+
+.btn-end-master:active:not(:disabled) {
+    transform: translateY(2px);
+    border-bottom-width: 1.5px;
+}
+
+/* 4. Bottom Strip: Live Activity Ticker with History Trigger */
+.center-ticker-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(90deg, rgba(5, 10, 26, 0.88) 0%, rgba(10, 18, 42, 0.8) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 4px 10px;
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.ticker-label {
+    font-size: 10px;
+    font-weight: 900;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    letter-spacing: 0.8px;
+}
+
+.live-dot-beacon {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow: 0 0 8px #ef4444, 0 0 16px #dc2626;
+    animation: livePulse 1.4s infinite;
+}
+
+@keyframes livePulse {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+.ticker-content {
+    flex: 1;
+    font-size: clamp(10.5px, 0.8vw, 12px);
+    color: #e2e8f0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+.ticker-time {
+    color: #94a3b8;
+    font-size: 9.5px;
+    margin-right: 4px;
+}
+
+.ticker-flash {
+    animation: tickerGlow 0.8s ease-out;
+}
+
+@keyframes tickerGlow {
+    0% { color: var(--gold); text-shadow: 0 0 8px var(--gold); }
+    100% { color: #e2e8f0; text-shadow: none; }
+}
+
+.ticker-history-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #cbd5e1;
+    font-size: 10.5px;
+    font-weight: 800;
+    padding: 3px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.18s ease;
+}
+
+.ticker-history-btn:hover, .ticker-history-btn.tv-focused {
+    background: var(--focus-glow);
+    color: #0a1024;
+    border-color: var(--focus-glow);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.5);
+}
+
+/* =========================================================
+   ANCHORED TILE RULES POPUP (CHANCE & COMMUNITY CHEST)
+   Pops up directly on that specific box on the board!
+   ========================================================= */
+
+.tile-popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    pointer-events: none;
+    display: none;
+}
+
+.tile-popup-overlay.active {
+    display: block;
+    pointer-events: auto;
+}
+
+.tile-card-popup {
+    position: absolute;
+    width: 360px;
+    max-width: 92vw;
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: #ffffff;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 125;
+    animation: tilePopupPop 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-sizing: border-box;
+}
+
+@keyframes tilePopupPop {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.tile-card-popup.theme-chance {
+    background: rgba(24, 18, 12, 0.96);
+    border: 2.5px solid #ff6d00;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 25px rgba(255, 109, 0, 0.45);
+}
+
+.tile-card-popup.theme-chest {
+    background: rgba(20, 14, 30, 0.96);
+    border: 2.5px solid #ab47bc;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 25px rgba(171, 71, 188, 0.45);
+}
+
+/* Speech Bubble Directional Pointer Arrows */
+.tile-card-bubble-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.tile-card-bubble-arrow.arrow-bottom {
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid #ff6d00;
+}
+.theme-chest .tile-card-bubble-arrow.arrow-bottom { border-top-color: #ab47bc; }
+
+.tile-card-bubble-arrow.arrow-top {
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #ff6d00;
+}
+.theme-chest .tile-card-bubble-arrow.arrow-top { border-bottom-color: #ab47bc; }
+
+.tile-card-bubble-arrow.arrow-right {
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid #ff6d00;
+}
+.theme-chest .tile-card-bubble-arrow.arrow-right { border-left-color: #ab47bc; }
+
+.tile-card-bubble-arrow.arrow-left {
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 12px solid #ff6d00;
+}
+.theme-chest .tile-card-bubble-arrow.arrow-left { border-right-color: #ab47bc; }
+
+.tile-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.tile-card-badge {
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.theme-chance .tile-card-badge { color: #ff9100; }
+.theme-chest .tile-card-badge { color: #ce93d8; }
+
+.tile-card-location {
+    font-size: 11px;
+    font-weight: 800;
+    color: #cbd5e1;
+    background: rgba(255,255,255,0.08);
+    padding: 2px 7px;
+    border-radius: 4px;
+}
+
+.tile-card-roll-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(251, 192, 45, 0.15);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 12.5px;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+.tile-card-desc {
+    font-size: 14.5px;
+    line-height: 1.45;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: #f8fafc;
+    border-left: 3.5px solid var(--gold);
+}
+
+/* 2-12 Rules Chart Table Inside Popup */
+.tile-rules-table-wrap {
+    margin-top: 8px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 8px;
+    max-height: 190px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.tile-rules-table-header {
+    font-size: 10.5px;
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+}
+
+.tile-rules-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.tile-rules-list li {
+    font-size: 10px;
+    line-height: 1.3;
+    padding: 2px 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.rule-roll-badge {
+    background: rgba(255,255,255,0.1);
+    color: var(--gold);
+    font-weight: 900;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 9.5px;
+    flex-shrink: 0;
+}
+
+.rule-item-active {
+    background: rgba(251, 192, 45, 0.22) !important;
+    border-left: 3px solid var(--gold);
+}
+
+.tile-popup-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+/* Active Highlight on Target Box */
+.board-tile.tile-active-highlight {
+    border-color: #ffea00 !important;
+    box-shadow: 0 0 25px rgba(255, 234, 0, 0.95), 0 0 10px #ff6d00, inset 0 0 12px rgba(255, 234, 0, 0.6) !important;
+    transform: scale(1.08);
+    z-index: 45 !important;
+    animation: tileHighlightPulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes tileHighlightPulse {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.25); }
+}
+
+/* =========================================================
+   BOTTOM REMOTE & KEYBOARD HELPER BAR (EDGE-TO-EDGE)
+   ========================================================= */
+
+.remote-hint-bar {
+    width: 100%;
+    background: rgba(10, 15, 30, 0.95);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 14px;
+    box-sizing: border-box;
+}
+
+.hint-pill {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: #cbd5e1;
+}
+
+.color-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.dot-red { background: #ef4444; }
+.dot-green { background: #22c55e; }
+.dot-yellow { background: #eab308; }
+.dot-blue { background: #3b82f6; }
+
+.key-badge {
+    background: #334155;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    color: #f8fafc;
+}
+
+/* =========================================================
+   ACTIVITY LOG FULL HISTORY MODAL
+   ========================================================= */
+
+.history-modal-card {
+    background: #0f172a;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    width: 480px;
+    max-width: 92vw;
+    color: #ffffff;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.85);
+}
+
+.history-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.history-modal-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.history-modal-body {
+    max-height: 50vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.log-entry {
+    font-size: 11px;
+    line-height: 1.35;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.04);
+    border-left: 3px solid #64748b;
+}
+
+.log-time {
+    font-size: 9px;
+    color: #64748b;
+    margin-right: 4px;
+}
+
+.log-info { border-color: #38bdf8; }
+.log-success { border-color: #4ade80; color: #f0fdf4; }
+.log-warning { border-color: #facc15; }
+.log-danger { border-color: #f87171; color: #fef2f2; }
+
+/* =========================================================
+   TITLE DEED MODAL
+   ========================================================= */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.title-deed-card {
+    background: #ffffff;
+    width: 360px;
+    border-radius: 10px;
+    border: 3px solid #1a1a24;
+    box-shadow: 0 24px 50px rgba(0,0,0,0.8);
+    overflow: hidden;
+    color: #1a1a24;
+    animation: modalPop 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.deed-header {
+    padding: 14px;
+    text-align: center;
+    color: #ffffff;
+    border-bottom: 2px solid #1a1a24;
+}
+
+.deed-small-header {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    opacity: 0.9;
+}
+
+.deed-title {
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    margin-top: 2px;
+}
+
+.deed-body {
+    padding: 16px 20px;
+}
+
+.deed-owner-tag {
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 11.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.deed-unowned-tag {
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 11.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.deed-rent-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 6px;
+}
+
+.deed-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+.deed-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.deed-row.highlight {
+    color: #b91c1c;
+    font-weight: 800;
+}
+
+.deed-divider {
+    height: 1px;
+    background: #cbd5e1;
+    margin: 8px 0;
+}
+
+.deed-footer-note {
+    font-size: 10px;
+    line-height: 1.35;
+    color: #475569;
+    text-align: center;
+    margin-top: 12px;
+    background: #f8fafc;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px dashed #cbd5e1;
+}
+
+.modal-actions {
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+}
+
+/* =========================================================
+   RESPONSIVE ADAPTATION FOR LAPTOPS, TABLETS & MOBILES
+   ========================================================= */
+
+@media (max-width: 1024px) {
+    .center-players-hud {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+    .center-action-hub {
+        gap: 10px;
+    }
+    .tv-btn {
+        padding: 7px 12px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    #tv-app-root {
+        padding: 3px;
+        gap: 3px;
+    }
+    .remote-hint-bar {
+        display: none;
+    }
+    .center-top-bar {
+        flex-wrap: wrap;
+    }
+    .center-turn-banner {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
+    }
+    .settings-grid-layout {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* =========================================================
+   TOP BAR ECONOMIC INDICATORS (BANK VAULT & RESORT JACKPOT)
+   ========================================================= */
+
+.bank-treasury-pill {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    border-radius: 14px;
+    padding: 3px 9px;
+    font-size: 11px;
+    color: #cbd5e1;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.bank-treasury-pill i {
+    color: var(--gold);
+}
+
+.bank-treasury-pill b {
+    color: #fde047;
+    font-weight: 800;
+}
+
+.resort-jackpot-pill {
+    background: linear-gradient(135deg, rgba(6, 95, 70, 0.85) 0%, rgba(4, 120, 87, 0.75) 100%);
+    border: 1px solid #34d399;
+    border-radius: 14px;
+    padding: 3px 9px;
+    font-size: 11px;
+    color: #ecfdf5;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
+}
+
+.resort-jackpot-pill i {
+    color: #34d399;
+}
+
+.resort-jackpot-pill b {
+    color: #6ee7b7;
+    font-weight: 900;
+}
+
+.resort-jackpot-pill.jackpot-active {
+    animation: jackpotPulse 1.8s infinite alternate;
+}
+
+@keyframes jackpotPulse {
+    0% { box-shadow: 0 0 10px rgba(52, 211, 153, 0.4); }
+    100% { box-shadow: 0 0 22px rgba(52, 211, 153, 0.85); border-color: #6ee7b7; }
+}
+
+.btn-settings-pill {
+    background: rgba(255, 215, 0, 0.12);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    color: #fef08a;
+}
+
+.btn-settings-pill:hover, .btn-settings-pill.tv-focused {
+    background: var(--gold);
+    color: #0b1536;
+    border-color: var(--gold);
+}
+
+.player-hud-bot-tag {
+    font-size: 7.5px;
+    font-weight: 900;
+    background: #2563eb;
+    color: #ffffff;
+    padding: 1px 4.5px;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 2.5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================================================
+   GAME SETUP & ECONOMIC RULES MODAL
+   ========================================================= */
+
+.settings-modal-card {
+    background: linear-gradient(145deg, rgba(12, 20, 48, 0.98) 0%, rgba(6, 11, 28, 0.98) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 16px;
+    padding: 18px 24px;
+    width: 960px;
+    max-width: 95vw;
+    max-height: 92vh;
+    overflow-y: auto;
+    color: #ffffff;
+    box-shadow: 0 25px 65px rgba(0, 0, 0, 0.92), 0 0 35px rgba(255, 215, 0, 0.22);
+    box-sizing: border-box;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    animation: modalPop 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.settings-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.settings-brand-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(14px, 1.2vw, 18px);
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    background: linear-gradient(135deg, #ffffff 0%, #fef08a 50%, #ffd700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    line-height: 1.15;
+}
+
+.settings-sub {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9.5px;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-top: 2px;
+}
+
+/* Quick Presets Bar */
+.settings-presets-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 6px 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.preset-label {
+    font-size: 10.5px;
+    font-weight: 900;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    letter-spacing: 0.5px;
+}
+
+.btn-preset {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #e2e8f0;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    outline: none;
+}
+
+.btn-preset:hover, .btn-preset.tv-focused {
+    background: rgba(0, 229, 255, 0.2);
+    border-color: var(--focus-glow);
+    color: #ffffff;
+}
+
+.btn-preset.active {
+    background: linear-gradient(135deg, #ffd700, #f59e0b);
+    color: #0b1536;
+    border-color: #ffd700;
+    font-weight: 900;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+
+/* 3-Column Settings Grid Layout */
+.settings-grid-layout {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.settings-card {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.settings-card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--gold);
+    letter-spacing: 0.8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 6px;
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.setting-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.setting-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #e2e8f0;
+}
+
+.setting-val-display {
+    font-size: 11.5px;
+    font-weight: 900;
+    color: #4ade80;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.setting-hint {
+    font-size: 9px;
+    color: #94a3b8;
+    line-height: 1.3;
+    margin-top: 2px;
+    display: block;
+}
+
+.segmented-choice-group {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-top: 3px;
+}
+
+.btn-choice {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #cbd5e1;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 4px 9px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    outline: none;
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.btn-choice:hover, .btn-choice.tv-focused {
+    background: rgba(0, 229, 255, 0.2);
+    border-color: var(--focus-glow);
+    color: #ffffff;
+}
+
+.btn-choice.active {
+    background: linear-gradient(135deg, #ffd700, #f59e0b);
+    color: #0b1536;
+    border-color: #ffd700;
+    font-weight: 900;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+
+.btn-chip {
+    flex: initial;
+    padding: 3px 8px;
+}
+
+/* Stepper for Starting Cash */
+.cash-stepper-wrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 3px;
+    flex-wrap: wrap;
+}
+
+.btn-stepper {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    font-size: 9.5px;
+    font-weight: 800;
+    padding: 3px 7px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.16s ease;
+}
+
+.btn-stepper:hover, .btn-stepper.tv-focused {
+    background: var(--focus-glow);
+    color: #0b1536;
+}
+
+.quick-cash-chips {
+    display: flex;
+    gap: 3px;
+    flex: 1;
+    justify-content: center;
+}
+
+/* Checkbox Row Styling */
+.setting-checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10.5px;
+    color: #e2e8f0;
+    cursor: pointer;
+    margin-top: 4px;
+    user-select: none;
+}
+
+.setting-checkbox-row input[type="checkbox"] {
+    accent-color: var(--gold);
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+/* Roster Rows */
+.players-roster-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.roster-player-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 4px 7px;
+    transition: opacity 0.2s ease;
+}
+
+.roster-player-row.disabled {
+    opacity: 0.3;
+    filter: grayscale(0.8);
+    pointer-events: none;
+}
+
+.roster-avatar-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.roster-p-badge {
+    font-size: 8px;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-weight: 900;
+    color: #ffffff;
+}
+
+.roster-name-input {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 4px 7px;
+    font-size: 11px;
+    font-weight: 700;
+    flex: 1;
+    min-width: 0;
+    outline: none;
+    font-family: 'Outfit', sans-serif;
+}
+
+.roster-name-input:focus {
+    border-color: var(--focus-glow);
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+}
+
+.btn-role-toggle {
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    outline: none;
+}
+
+.role-human {
+    background: rgba(59, 130, 246, 0.22);
+    border-color: #3b82f6;
+    color: #93c5fd;
+}
+
+.role-bot {
+    background: rgba(234, 179, 8, 0.25);
+    border-color: #eab308;
+    color: #fde047;
+}
+
+/* Modal Footer Actions */
+.settings-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer-right-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-start-game-master {
+    background: linear-gradient(180deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+    color: #ffffff;
+    border: 1.5px solid #4ade80;
+    border-bottom: 3.5px solid #14532d;
+    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.45), 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 10px 22px;
+    font-size: 13.5px;
+    font-weight: 900;
+    letter-spacing: 0.6px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-start-game-master::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: rotate(30deg);
+    animation: btnShimmer 3s infinite;
+}
+
+.btn-start-game-master:active:not(:disabled) {
+    transform: translateY(2px);
+    border-bottom-width: 1.5px;
+}

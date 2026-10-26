@@ -1,0 +1,13 @@
+{
+  "id": "com.antigravity.business.game",
+  "version": "1.0.0",
+  "vendor": "Antigravity",
+  "type": "web",
+  "main": "index.html",
+  "title": "Business - Nava Vyapar (India Edition)",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "resolution": "1920x1080",
+  "uiRevision": 2,
+  "requiredACG": []
+}

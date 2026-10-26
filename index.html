@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Business - Nava Vyapar (India Edition) for LG webOS TV</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=7">
+</head>
+<body>
+    <div id="tv-app-root">
+        <!-- Main Fullscreen 10x10 Game Board -->
+        <main class="board-container" id="game-board">
+            <!-- Dynamically populated by js/ui.js with perimeter tiles & center command console -->
+        </main>
+
+        <!-- TV Remote & Keyboard Helper Bar (Edge to Edge) -->
+        <footer class="remote-hint-bar">
+            <div class="hint-pill">
+                <span class="color-dot dot-red"></span>
+                <span class="key-badge">R / Space</span>
+                <b>Roll</b>
+            </div>
+            <div class="hint-pill">
+                <span class="color-dot dot-green"></span>
+                <span class="key-badge">B</span>
+                <b>Buy / Build</b>
+            </div>
+            <div class="hint-pill">
+                <span class="color-dot dot-yellow"></span>
+                <span class="key-badge">E</span>
+                <b>End Turn</b>
+            </div>
+            <div class="hint-pill">
+                <span class="key-badge">D-PAD / &larr;&uarr;&rarr;&darr;</span>
+                <span>Navigate</span>
+            </div>
+            <div class="hint-pill">
+                <span class="key-badge">OK / Enter</span>
+                <span>Inspect Deed / Card Rules</span>
+            </div>
+            <div class="hint-pill">
+                <span class="key-badge">BACK / Esc</span>
+                <span>Close</span>
+            </div>
+            <div class="hint-pill">
+                <span class="key-badge">F</span>
+                <span>Fullscreen</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Anchored Chance & Community Chest Tile Rules Popup -->
+    <div class="tile-popup-overlay" id="tile-popup-overlay">
+        <div class="tile-card-popup" id="tile-card-popup">
+            <div class="tile-card-bubble-arrow" id="tile-popup-arrow"></div>
+            <div class="tile-card-header">
+                <div class="tile-card-badge" id="tile-popup-badge">
+                    <i class="fa-solid fa-dice"></i> CHANCE RULE
+                </div>
+                <div class="tile-card-location" id="tile-popup-location">BOX 7 • CHANCE</div>
+            </div>
+            <div class="tile-card-roll-tag" id="tile-popup-roll">DICE ROLL: 7</div>
+            <div class="tile-card-desc" id="tile-popup-desc">
+                Description of the card rule...
+            </div>
+            <!-- All 2-12 Rules Table (For Inspection & Reference) -->
+            <div class="tile-rules-table-wrap" id="tile-popup-table-wrap" style="display: none;">
+                <div class="tile-rules-table-header">
+                    <i class="fa-solid fa-list-ol"></i> ALL DICE ROLL OUTCOMES (2-12):
+                </div>
+                <ul class="tile-rules-list" id="tile-popup-rules-list">
+                    <!-- Populated dynamically -->
+                </ul>
+            </div>
+            <div class="tile-popup-actions" id="tile-popup-actions">
+                <button class="tv-btn btn-secondary tv-focusable" id="btn-toggle-all-rules" tabindex="0">
+                    <i class="fa-solid fa-list"></i> All Rules
+                </button>
+                <button class="tv-btn btn-primary tv-focusable" id="btn-close-tile-popup" tabindex="0">
+                    <i class="fa-solid fa-check"></i> Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Title Deed Inspection Modal -->
+    <div class="modal-overlay" id="modal-deed">
+        <div class="modal-content-wrap">
+            <div id="deed-card-render"></div>
+            <div class="modal-actions">
+                <button class="tv-btn btn-secondary tv-focusable btn-close-modal" id="btn-close-deed" tabindex="0">
+                    <i class="fa-solid fa-xmark"></i> Close (Back)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity Log Full History Modal -->
+    <div class="modal-overlay" id="modal-history">
+        <div class="history-modal-card">
+            <div class="history-modal-header">
+                <div class="history-modal-title"><i class="fa-solid fa-clock-rotate-left"></i> Game Activity History</div>
+                <button class="btn-pill tv-focusable btn-close-modal" id="btn-close-history-x" tabindex="0">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="history-modal-body" id="activity-log-full">
+                <!-- Populated dynamically -->
+            </div>
+            <div class="modal-actions">
+                <button class="tv-btn btn-secondary tv-focusable btn-close-modal" id="btn-close-history" tabindex="0">
+                    <i class="fa-solid fa-xmark"></i> Close (Back)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Game Launch Setup & Custom Rules Modal -->
+    <div class="modal-overlay" id="modal-settings">
+        <div class="settings-modal-card">
+            <div class="settings-modal-header">
+                <div class="settings-brand-header">
+                    <div class="brand-coin-badge"><i class="fa-solid fa-sliders"></i></div>
+                    <div class="brand-text-wrap">
+                        <span class="settings-title">GAME SETUP & ECONOMIC RULES</span>
+                        <span class="settings-sub">Customize initial capital, bank reserves, player types & house rules</span>
+                    </div>
+                </div>
+                <button class="btn-pill tv-focusable btn-close-modal" id="btn-close-settings-x" tabindex="0" title="Close Settings">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Quick Preset Selectors -->
+            <div class="settings-presets-bar">
+                <span class="preset-label"><i class="fa-solid fa-wand-magic-sparkles"></i> PRESETS:</span>
+                <button type="button" class="btn-preset tv-focusable" id="preset-casual" tabindex="0">⚡ Quick Casual</button>
+                <button type="button" class="btn-preset tv-focusable" id="preset-classic" tabindex="0">🏛️ Classic Vyapar</button>
+                <button type="button" class="btn-preset tv-focusable active" id="preset-tycoon" tabindex="0">👑 Tycoon Deluxe</button>
+                <button type="button" class="btn-preset tv-focusable" id="preset-highroller" tabindex="0">💰 High Roller</button>
+            </div>
+
+            <div class="settings-grid-layout">
+                <!-- Column 1: Players & Roster -->
+                <div class="settings-card">
+                    <div class="settings-card-title"><i class="fa-solid fa-users"></i> Players & Lineup</div>
+                    <div class="setting-item">
+                        <label class="setting-label">Number of Players</label>
+                        <div class="segmented-choice-group" id="group-player-count">
+                            <button type="button" class="btn-choice tv-focusable" data-count="2">2 Players</button>
+                            <button type="button" class="btn-choice tv-focusable" data-count="3">3 Players</button>
+                            <button type="button" class="btn-choice tv-focusable active" data-count="4">4 Players</button>
+                        </div>
+                    </div>
+                    
+                    <div class="players-roster-list" id="settings-roster-list">
+                        <!-- Populated dynamically by SettingsManager -->
+                    </div>
+                </div>
+
+                <!-- Column 2: Financial Capital & Bank Treasury -->
+                <div class="settings-card">
+                    <div class="settings-card-title"><i class="fa-solid fa-vault"></i> Capital & Bank Treasury</div>
+                    
+                    <!-- Starting Player Cash -->
+                    <div class="setting-item">
+                        <div class="setting-label-row">
+                            <label class="setting-label">Starting Cash per Player</label>
+                            <span class="setting-val-display" id="disp-starting-cash">₹20,000</span>
+                        </div>
+                        <div class="cash-stepper-wrap">
+                            <button type="button" class="btn-stepper tv-focusable" id="btn-cash-minus">- ₹2,500</button>
+                            <div class="quick-cash-chips" id="group-starting-cash">
+                                <button type="button" class="btn-choice btn-chip tv-focusable" data-val="10000">₹10k</button>
+                                <button type="button" class="btn-choice btn-chip tv-focusable" data-val="15000">₹15k</button>
+                                <button type="button" class="btn-choice btn-chip tv-focusable active" data-val="20000">₹20k</button>
+                                <button type="button" class="btn-choice btn-chip tv-focusable" data-val="30000">₹30k</button>
+                                <button type="button" class="btn-choice btn-chip tv-focusable" data-val="50000">₹50k</button>
+                            </div>
+                            <button type="button" class="btn-stepper tv-focusable" id="btn-cash-plus">+ ₹2,500</button>
+                        </div>
+                    </div>
+
+                    <!-- Bank Treasury Reserve -->
+                    <div class="setting-item">
+                        <div class="setting-label-row">
+                            <label class="setting-label">Bank Treasury Reserve</label>
+                            <span class="setting-val-display" id="disp-bank-treasury">₹2,00,000</span>
+                        </div>
+                        <div class="segmented-choice-group" id="group-bank-treasury">
+                            <button type="button" class="btn-choice tv-focusable" data-val="100000">₹1 Lakh</button>
+                            <button type="button" class="btn-choice tv-focusable active" data-val="200000">₹2 Lakh</button>
+                            <button type="button" class="btn-choice tv-focusable" data-val="500000">₹5 Lakh</button>
+                            <button type="button" class="btn-choice tv-focusable" data-val="Infinity">Unlimited ∞</button>
+                        </div>
+                        <span class="setting-hint">Reserve Bank vault capacity. Low bank funds trigger emergency stimulus!</span>
+                    </div>
+
+                    <!-- START / GO Salary -->
+                    <div class="setting-item">
+                        <div class="setting-label-row">
+                            <label class="setting-label">START / GO Pass Salary</label>
+                            <span class="setting-val-display" id="disp-pass-go">₹750</span>
+                        </div>
+                        <div class="segmented-choice-group" id="group-pass-go">
+                            <button type="button" class="btn-choice tv-focusable" data-val="500">₹500</button>
+                            <button type="button" class="btn-choice tv-focusable active" data-val="750">₹750</button>
+                            <button type="button" class="btn-choice tv-focusable" data-val="1000">₹1,000</button>
+                            <button type="button" class="btn-choice tv-focusable" data-val="1500">₹1,500</button>
+                        </div>
+                        <label class="setting-checkbox-row">
+                            <input type="checkbox" id="check-double-go" checked>
+                            <span>Double salary on landing directly on START</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Column 3: House Rules & Victory -->
+                <div class="settings-card">
+                    <div class="settings-card-title"><i class="fa-solid fa-scale-balanced"></i> House Rules & Victory</div>
+                    
+                    <!-- Resort Jackpot -->
+                    <div class="setting-item">
+                        <label class="setting-checkbox-row">
+                            <input type="checkbox" id="check-resort-jackpot" checked>
+                            <span><b>Resort Jackpot:</b> Taxes & fines pool into Resort Pot</span>
+                        </label>
+                        <span class="setting-hint">Landing on Resort (Tile 9) wins the accumulated jackpot!</span>
+                    </div>
+
+                    <!-- Jail Bail Fee & Rent in Jail -->
+                    <div class="setting-item">
+                        <label class="setting-label">Jail Release Bail Fee</label>
+                        <div class="segmented-choice-group" id="group-jail-bail">
+                            <button type="button" class="btn-choice tv-focusable" data-val="250">₹250</button>
+                            <button type="button" class="btn-choice tv-focusable active" data-val="500">₹500</button>
+                            <button type="button" class="btn-choice tv-focusable" data-val="1000">₹1,000</button>
+                        </div>
+                        <label class="setting-checkbox-row" style="margin-top: 6px;">
+                            <input type="checkbox" id="check-rent-in-jail" checked>
+                            <span>Can collect rent from opponents while in Jail</span>
+                        </label>
+                    </div>
+
+                    <!-- Quick Deal Headstart -->
+                    <div class="setting-item">
+                        <label class="setting-checkbox-row">
+                            <input type="checkbox" id="check-quick-deal">
+                            <span><b>Quick Start:</b> Deal 2 random properties to each player</span>
+                        </label>
+                        <span class="setting-hint">Accelerates monopolies, building, and high-speed gameplay!</span>
+                    </div>
+
+                    <!-- Win Condition -->
+                    <div class="setting-item">
+                        <label class="setting-label">Winning Condition</label>
+                        <div class="segmented-choice-group" id="group-win-condition">
+                            <button type="button" class="btn-choice tv-focusable active" data-val="bankruptcy">Bankruptcy</button>
+                            <button type="button" class="btn-choice tv-focusable" data-val="wealth_50k">₹50k Wealth</button>
+                            <button type="button" class="btn-choice tv-focusable" data-val="wealth_100k">₹1 Lakh</button>
+                            <button type="button" class="btn-choice tv-focusable" data-val="rounds_30">30 Rounds</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="settings-modal-footer">
+                <button type="button" class="tv-btn btn-secondary tv-focusable" id="btn-reset-settings" tabindex="0">
+                    <i class="fa-solid fa-arrow-rotate-left"></i> Reset Defaults
+                </button>
+                <div class="footer-right-actions">
+                    <button type="button" class="tv-btn btn-secondary tv-focusable btn-close-modal" id="btn-cancel-settings" tabindex="0">
+                        <i class="fa-solid fa-xmark"></i> Dismiss
+                    </button>
+                    <button type="button" class="tv-btn btn-success btn-start-game-master tv-focusable" id="btn-apply-start-game" tabindex="0">
+                        <i class="fa-solid fa-play"></i> START GAME WITH SETTINGS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script References -->
+    <script src="js/data.js?v=9"></script>
+    <script src="js/monuments.js?v=9"></script>
+    <script src="js/audio.js?v=9"></script>
+    <script src="js/tv-nav.js?v=9"></script>
+    <script src="js/settings.js?v=9"></script>
+    <script src="js/ui.js?v=9"></script>
+    <script src="js/game.js?v=9"></script>
+
+    <!-- Multi-Device Auto Layout & Bootstrap -->
+    <script>
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen().catch(() => {});
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                }
+            }
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            const fsBtn = document.getElementById('btn-fullscreen');
+            if (fsBtn) {
+                fsBtn.innerHTML = document.fullscreenElement ? '<i class="fa-solid fa-compress"></i>' : '<i class="fa-solid fa-expand"></i>';
+            }
+        });
+
+        function bindCenterUiHandlers() {
+            // Fullscreen toggle
+            const fsBtn = document.getElementById('btn-fullscreen');
+            if (fsBtn) {
+                fsBtn.onclick = toggleFullscreen;
+            }
+
+            // Roll button
+            const rollBtn = document.getElementById('btn-roll');
+            if (rollBtn) {
+                rollBtn.onclick = () => game.handleRollButton();
+            }
+
+            // Settings / Rules Button
+            const settingsBtn = document.getElementById('btn-open-settings');
+            if (settingsBtn) {
+                settingsBtn.onclick = () => settingsMgr.open();
+            }
+
+            // Activity History Button
+            const histBtn = document.getElementById('btn-open-history');
+            if (histBtn) {
+                histBtn.onclick = () => {
+                    const modal = document.getElementById('modal-history');
+                    tvNav.openModal(modal);
+                };
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Wire modal close buttons
+            document.getElementById('btn-close-deed').addEventListener('click', () => {
+                tvNav.closeModal(document.getElementById('modal-deed'));
+            });
+            document.getElementById('btn-close-history').addEventListener('click', () => {
+                tvNav.closeModal(document.getElementById('modal-history'));
+            });
+            document.getElementById('btn-close-history-x').addEventListener('click', () => {
+                tvNav.closeModal(document.getElementById('modal-history'));
+            });
+            document.getElementById('btn-close-settings-x').addEventListener('click', () => {
+                tvNav.closeModal(document.getElementById('modal-settings'));
+            });
+            document.getElementById('btn-cancel-settings').addEventListener('click', () => {
+                tvNav.closeModal(document.getElementById('modal-settings'));
+            });
+
+            // Wire Tile Popup buttons
+            document.getElementById('btn-close-tile-popup').addEventListener('click', () => {
+                ui.closeTileCardPopup();
+            });
+
+            document.getElementById('btn-toggle-all-rules').addEventListener('click', () => {
+                ui.toggleTileRulesTable();
+            });
+
+            // Initialize Settings Manager
+            settingsMgr.init();
+
+            // Start game with current settings
+            game.initWithSettings(settingsMgr.current);
+
+            // Bind Center HUD buttons
+            bindCenterUiHandlers();
+
+            // Open Settings Modal on game start so user can customize before rolling
+            setTimeout(() => {
+                settingsMgr.open();
+            }, 350);
+        });
+    </script>
+</body>
+</html>
